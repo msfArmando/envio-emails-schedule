@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #000; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #000; padding: 3px 5px; text-align: center; white-space: nowrap; }
+        .title-row td { background-color: #4CAF50; color: #fff; font-weight: bold; font-size: 13px; padding: 6px; }
+        .title-row .date-cell { text-align: right; font-size: 11px; font-weight: normal; }
+        .turno-header th { background-color: #E0E0E0; font-weight: bold; font-size: 12px; }
+        .time-header th { background-color: #F0F0F0; font-weight: bold; }
+        .group-header td { background-color: #2E7D32; color: #fff; font-weight: bold; text-align: left; padding: 4px 8px; font-size: 12px; }
+        .col-left { text-align: left; }
+        .row-white td { background-color: #FFF; }
+        .row-alt td { background-color: #F9F9F9; }
+        .col-min { font-weight: bold; }
+        .col-max { font-weight: bold; }
+        .col-media { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr class="title-row">
+                <td colspan="10">PARÂMETROS OPERACIONAIS DE PROCESSO - {{ unidade }}</td>
+                <td class="date-cell">Data: {{ data }}</td>
+            </tr>
+            <tr class="turno-header">
+                <th rowspan="2">Análise</th>
+                <th rowspan="2">Mín</th>
+                <th rowspan="2">Máx</th>
+                <th rowspan="2">Und</th>
+                <th colspan="2">TURNO A</th>
+                <th colspan="2">TURNO B</th>
+                <th colspan="2">TURNO C</th>
+                <th rowspan="2">Média Dia</th>
+            </tr>
+            <tr class="time-header">
+                <th>9h</th>
+                <th>13h</th>
+                <th>17h</th>
+                <th>21h</th>
+                <th>1h</th>
+                <th>5h</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for grupo, items in grupos.items() %}
+            <tr class="group-header">
+                <td colspan="11">{{ grupo }}</td>
+            </tr>
+            {% for item in items %}
+            <tr class="{{ loop.cycle('row-white', 'row-alt') }}">
+                <td class="col-left">{{ item.variavel }}</td>
+                <td class="col-min">{{ format_value(item.vlr_min) }}</td>
+                <td class="col-max">{{ format_value(item.vlr_max) }}</td>
+                <td>{{ item.unidade }}</td>
+                <td>{{ format_value(item.nove) }}</td>
+                <td>{{ format_value(item.treze) }}</td>
+                <td>{{ format_value(item.dezessete) }}</td>
+                <td>{{ format_value(item.vinteeum) }}</td>
+                <td>{{ format_value(item.um) }}</td>
+                <td>{{ format_value(item.cinco) }}</td>
+                <td class="col-media">{{ format_value(item.media_dia) }}</td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

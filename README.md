@@ -1,0 +1,1 @@
+Schedule para envio de emails automáticos com apscheduler, jinja e docker.

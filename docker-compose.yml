@@ -1,0 +1,6 @@
+services:
+  backend:
+    image: parametros-operacionais-schedule:1.0
+    ports:
+      - "8530:8530"
+    restart: unless-stopped
